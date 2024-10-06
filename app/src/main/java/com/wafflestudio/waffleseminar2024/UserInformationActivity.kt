@@ -11,11 +11,14 @@ import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.wafflestudio.waffleseminar2024.databinding.TabProfileViewBinding
 
 class UserInformationActivity: AppCompatActivity() {
+    private lateinit var binding: TabProfileViewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_information)
+        binding = TabProfileViewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         addToolbarOption()
         addWorkspaceUrl()
         addGithubLink()
@@ -27,7 +30,7 @@ class UserInformationActivity: AppCompatActivity() {
     }
     
     private fun addToolbarOption() {
-        val toolbar: Toolbar = findViewById(R.id.toolbarUserInformation)
+        val toolbar: Toolbar = binding.toolbarUserInformation
         setSupportActionBar(toolbar)
         
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -36,14 +39,14 @@ class UserInformationActivity: AppCompatActivity() {
     }
 
     private fun addWorkspaceUrl() {
-        val slackWorkspaceValueView: TextView = findViewById(R.id.slackWorkspaceValue)
+        val slackWorkspaceValueView: TextView = binding.slackWorkspaceValue
         val workspaceUrl = intent.getStringExtra("WORKSPACE_URL")
         slackWorkspaceValueView.text = workspaceUrl
 
     }
 
     private fun addGithubLink() {
-        val textView: TextView = findViewById(R.id.githubValue)
+        val textView: TextView = binding.githubValue
         val text = "hjlim7831"
         val spannableString = SpannableString(text)
 

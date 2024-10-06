@@ -12,13 +12,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.wafflestudio.waffleseminar2024.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addToolbarOption() {
-        val toolbar: Toolbar = findViewById(R.id.toolbarMain)
+        val toolbar: Toolbar = binding.toolbarMain
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -38,23 +41,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addWorkspaceUrlEditTextOption() {
-        val editText: EditText = findViewById(R.id.workspaceUrl)
-        val button: Button = findViewById(R.id.buttonContinue)
+        val editText: EditText = binding.workspaceUrl
+        val button: Button = binding.buttonContinue
         editText.hint = "workspace-url.slack.com"
         editText.addTextChangedListener(WorkspaceUrlTextWatcher(editText, button))
     }
 
     private fun addContinueButtonOption() {
-        val editText: EditText = findViewById(R.id.workspaceUrl)
-        val button: Button = findViewById(R.id.buttonContinue)
+        val editText: EditText = binding.workspaceUrl
+        val button: Button = binding.buttonContinue
 
         button.setOnClickListener {
             val workspaceUrl = editText.text.toString()
-            val intent = Intent(this, UserInformationActivity::class.java)
+            val intent = Intent(this, HomeTabActivity::class.java)
             intent.putExtra("WORKSPACE_URL", workspaceUrl)
             startActivity(intent)
         }
-
-
     }
 }
