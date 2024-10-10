@@ -22,9 +22,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UserInformationActivity">
-        </activity>
-        <activity
             android:name=".HomeTabActivity">
         </activity>
     </application>

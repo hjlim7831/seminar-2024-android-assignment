@@ -7,6 +7,7 @@ import android.text.SpannableString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -17,8 +18,15 @@ class UserInformationActivity: AppCompatActivity() {
     private lateinit var binding: TabProfileViewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("UserInformationActivity", "onCreate called")
         binding = TabProfileViewBinding.inflate(layoutInflater)
+        Log.d("check run", "setContentView : UserInformationActivity")
         setContentView(binding.root)
+
+        Log.d("UserInformationActivity", "Intent extras: ${intent.extras}")
+        val workspaceUrl = intent.getStringExtra("WORKSPACE_URL")
+        Log.d("UserInformationActivity", "Received WORKSPACE_URL: $workspaceUrl")
+
         addToolbarOption()
         addWorkspaceUrl()
         addGithubLink()
@@ -42,7 +50,7 @@ class UserInformationActivity: AppCompatActivity() {
         val slackWorkspaceValueView: TextView = binding.slackWorkspaceValue
         val workspaceUrl = intent.getStringExtra("WORKSPACE_URL")
         slackWorkspaceValueView.text = workspaceUrl
-
+        Log.d("UserInformationActivity", "Setting WORKSPACE_URL to TextView: $workspaceUrl")
     }
 
     private fun addGithubLink() {
