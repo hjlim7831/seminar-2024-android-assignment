@@ -4,15 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.wafflestudio.waffleseminar2024.databinding.HomeTabBinding
 
 class HomeTabActivity: AppCompatActivity() {
     private lateinit var binding: HomeTabBinding
-    private lateinit var tabAdapter: TabAdapter
-    private lateinit var viewPagerAdapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,32 +20,23 @@ class HomeTabActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         val workspaceUrl = intent.getStringExtra("WORKSPACE_URL") ?: ""
-        Log.d("HomeTabActivity", "Received WORKSPACE_URL: $workspaceUrl")
 
         val tabs = listOf(
-            TabItem("영화", R.drawable.movie_recorder),
-            TabItem("앱", R.drawable.app_mobile),
-            TabItem("검색", R.drawable.search),
-            TabItem("프로필", R.drawable.profile)
+            TabItem("영화", R.drawable.movie_recorder) { MovieFragment() },
+            TabItem("앱", R.drawable.app_mobile) { AppFragment() },
+            TabItem("검색", R.drawable.search) { SearchFragment() },
+            TabItem("프로필", R.drawable.profile) { ProfileFragment.newInstance(workspaceUrl) }
         )
 
-        setupRecyclerView(tabs)
-        setupViewPager(tabs, workspaceUrl)
-    }
+        val tabLayout = binding.tabLayout
+        val viewPager = binding.viewPager
+        val adapter = ViewPagerAdapter(this, tabs)
+        viewPager.adapter = adapter
 
-    private fun setupRecyclerView(tabs: List<TabItem>) {
-        tabAdapter = TabAdapter(tabs) { position ->
-            binding.viewPager.currentItem = position
-        }
-        binding.tabRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@HomeTabActivity, LinearLayoutManager.HORIZONTAL, false)
-            adapter = tabAdapter
-        }
-    }
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = adapter.getTabItem(position).title
+            tab.icon = ContextCompat.getDrawable(this, adapter.getTabItem(position).iconResId)
+        }.attach()
 
-    private fun setupViewPager(tabs: List<TabItem>, workspaceUrl: String) {
-        Log.d("HomeTabActivity", "Setting up ViewPager with WORKSPACE_URL: $workspaceUrl")
-        viewPagerAdapter = ViewPagerAdapter(tabs, workspaceUrl)
-        binding.viewPager.adapter = viewPagerAdapter
     }
 }
