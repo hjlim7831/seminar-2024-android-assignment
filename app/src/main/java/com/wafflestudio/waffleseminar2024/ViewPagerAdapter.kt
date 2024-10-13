@@ -3,6 +3,7 @@ package com.wafflestudio.waffleseminar2024
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.wafflestudio.waffleseminar2024.dto.TabItem
 
 class ViewPagerAdapter(
     fragmentActivity: FragmentActivity,

@@ -1,15 +1,12 @@
 package com.wafflestudio.waffleseminar2024
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.wafflestudio.waffleseminar2024.databinding.HomeTabBinding
+import com.wafflestudio.waffleseminar2024.dto.TabItem
+import com.wafflestudio.waffleseminar2024.search.SearchFragment
 
 class HomeTabActivity: AppCompatActivity() {
     private lateinit var binding: HomeTabBinding
